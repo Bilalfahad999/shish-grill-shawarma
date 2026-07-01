@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { EASE_OUT } from "@/lib/motion";
 
 interface SectionTitleProps {
   eyebrow?: string;
@@ -14,49 +14,66 @@ interface SectionTitleProps {
   id?: string;
   /** Use "h1" when this is the page's primary heading. Defaults to "h2". */
   headingLevel?: "h1" | "h2";
-  /** Animates title characters fanning in from center as section scrolls into view. */
+  /** Animates the title's letters in, word by word, as the section scrolls into view. */
   scrollAnimate?: boolean;
 }
 
-function AnimChar({
-  char,
-  index,
-  center,
-  scrollYProgress,
+// Intersection-triggered stagger — reliable on mobile (Android/iOS) where
+// scroll-linked progress often stalls and leaves the title stuck invisible.
+const titleContainer: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+const wordContainer: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.025 } },
+};
+const charVariant: Variants = {
+  hidden: { opacity: 0, y: "0.45em" },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE_OUT } },
+};
+
+function AnimatedTitle({
+  text,
+  className,
+  centered,
 }: {
-  char: string;
-  index: number;
-  center: number;
-  scrollYProgress: any;
+  text: string;
+  className: string;
+  centered?: boolean;
 }) {
-  const dist = index - center;
-  const x = useTransform(scrollYProgress, [0, 0.65], [dist * 38, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.45], [0, 1]);
+  // Split into words so letters never break across lines — each word is a
+  // single non-wrapping unit, and the line only wraps between whole words.
+  const words = text.split(" ");
+
   return (
     <motion.span
-      className={cn("inline-block", char === " " && "w-[0.28em]")}
-      style={{ x, opacity }}
+      variants={titleContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-60px" }}
+      aria-label={text}
+      className={cn(
+        "flex flex-wrap gap-x-[0.25em]",
+        centered && "justify-center",
+        className
+      )}
     >
-      {char === " " ? " " : char}
-    </motion.span>
-  );
-}
-
-function AnimatedTitle({ text, className }: { text: string; className: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 92%", "center 55%"],
-  });
-  const chars = text.split("");
-  const center = Math.floor(chars.length / 2);
-
-  return (
-    <span ref={ref} className={cn("flex flex-wrap", className)}>
-      {chars.map((char, i) => (
-        <AnimChar key={i} char={char} index={i} center={center} scrollYProgress={scrollYProgress} />
+      {words.map((word, wi) => (
+        <motion.span
+          key={wi}
+          variants={wordContainer}
+          aria-hidden="true"
+          className="inline-flex whitespace-nowrap"
+        >
+          {Array.from(word).map((char, ci) => (
+            <motion.span key={ci} variants={charVariant} className="inline-block">
+              {char}
+            </motion.span>
+          ))}
+        </motion.span>
       ))}
-    </span>
+    </motion.span>
   );
 }
 
@@ -92,7 +109,7 @@ export function SectionTitle({
       )}
       <Heading id={id} className={scrollAnimate ? undefined : headingClass}>
         {scrollAnimate ? (
-          <AnimatedTitle text={title} className={headingClass} />
+          <AnimatedTitle text={title} className={headingClass} centered={centered} />
         ) : (
           title
         )}

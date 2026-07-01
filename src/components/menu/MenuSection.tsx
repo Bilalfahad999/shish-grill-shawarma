@@ -1,9 +1,9 @@
-﻿"use client";
+"use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import type { MenuItem, MenuCategory } from "@/data/menu";
 import { FoodCard } from "./FoodCard";
+import { EASE_OUT } from "@/lib/motion";
 
 interface MenuSectionProps {
   category: MenuCategory;
@@ -12,47 +12,49 @@ interface MenuSectionProps {
   alternateLayout?: boolean;
 }
 
+// Intersection-triggered stagger — reliable on mobile, and words never break
+// mid-letter because each word is a single non-wrapping unit.
+const titleContainer: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+const wordContainer: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.025 } },
+};
+const charVariant: Variants = {
+  hidden: { opacity: 0, y: "0.45em" },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE_OUT } },
+};
+
 function AnimatedSectionTitle({ text, id }: { text: string; id: string }) {
-  const ref = useRef<HTMLHeadingElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 90%", "center 60%"],
-  });
-  const chars = text.split("");
-  const center = Math.floor(chars.length / 2);
+  const words = text.split(" ");
 
   return (
-    <h2 id={id} ref={ref} className="font-heading text-3xl sm:text-4xl font-light text-[#2F2F2F] flex flex-wrap">
-      {chars.map((char, i) => {
-        const dist = i - center;
-        return (
-          <AnimChar key={i} char={char} dist={dist} scrollYProgress={scrollYProgress} />
-        );
-      })}
-    </h2>
-  );
-}
-
-function AnimChar({
-  char,
-  dist,
-  scrollYProgress,
-}: {
-  char: string;
-  dist: number;
-  scrollYProgress: any;
-}) {
-  const x = useTransform(scrollYProgress, [0, 0.65], [dist * 30, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.45], [0, 1]);
-
-  if (char === " ") {
-    return <span className="w-[0.28em]">{" "}</span>;
-  }
-
-  return (
-    <motion.span className="inline-block" style={{ x, opacity }}>
-      {char}
-    </motion.span>
+    <motion.h2
+      id={id}
+      variants={titleContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-60px" }}
+      aria-label={text}
+      className="font-heading text-3xl sm:text-4xl font-light text-[#2F2F2F] flex flex-wrap gap-x-[0.25em]"
+    >
+      {words.map((word, wi) => (
+        <motion.span
+          key={wi}
+          variants={wordContainer}
+          aria-hidden="true"
+          className="inline-flex whitespace-nowrap"
+        >
+          {Array.from(word).map((char, ci) => (
+            <motion.span key={ci} variants={charVariant} className="inline-block">
+              {char}
+            </motion.span>
+          ))}
+        </motion.span>
+      ))}
+    </motion.h2>
   );
 }
 

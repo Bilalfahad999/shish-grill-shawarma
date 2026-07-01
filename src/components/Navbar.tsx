@@ -200,10 +200,10 @@ export function Navbar() {
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileOpen(true)}
-              className={`lg:hidden p-2 rounded-lg transition-colors duration-200 cursor-pointer ${
+              className={`lg:hidden p-2.5 rounded-xl transition-colors duration-200 cursor-pointer ${
                 scrolled
                   ? "text-[#2F2F2F] hover:bg-[#F2ECE3]"
-                  : "text-white hover:bg-white/10"
+                  : "text-white bg-black/25 hover:bg-black/40 backdrop-blur-sm shadow-sm"
               }`}
               aria-label="Open navigation menu"
               aria-expanded={mobileOpen}
