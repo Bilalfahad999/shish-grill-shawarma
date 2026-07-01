@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion";
 import { Mail, Lock, Eye, EyeOff, ArrowRight, User, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/Logo";
 
 // ── Travelling-light border effect ──────────────────────────────────────────
 
@@ -172,18 +173,9 @@ function BrandLogo() {
       initial={{ scale: 0.5, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ type: "spring", duration: 0.8 }}
-      className="mx-auto w-12 h-12 rounded-full border border-white/10 flex items-center justify-center relative overflow-hidden"
+      className="mx-auto"
     >
-      <svg viewBox="0 0 40 40" fill="none" className="w-7 h-7" aria-hidden="true">
-        <path
-          d="M20 8 C20 8 14 14 14 20 C14 26 17 30 20 32 C23 30 26 26 26 20 C26 14 20 8 20 8Z"
-          fill="white"
-          fillOpacity="0.9"
-        />
-        <path d="M12 18 L28 18" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M10 22 L30 22" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
+      <Logo variant="mark" size={48} className="w-12 h-12 rounded-xl" />
     </motion.div>
   );
 }

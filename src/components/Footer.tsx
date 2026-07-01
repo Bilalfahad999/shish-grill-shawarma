@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Phone, MapPin, Clock } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { useSiteSettings, groupHours } from "@/hooks/useSiteSettings";
+import { Logo } from "@/components/Logo";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -51,17 +52,7 @@ export function Footer() {
             {/* Brand */}
             <div className="lg:col-span-1 space-y-5">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#B54E32] flex items-center justify-center">
-                  <svg viewBox="0 0 40 40" fill="none" className="w-6 h-6" aria-hidden="true">
-                    <path d="M20 8 C20 8 14 14 14 20 C14 26 17 30 20 32 C23 30 26 26 26 20 C26 14 20 8 20 8Z" fill="white" fillOpacity="0.9" />
-                    <path d="M12 18 L28 18" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-                    <path d="M10 22 L30 22" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
-                </div>
-                <div>
-                  <span className="block font-heading text-xl font-semibold">Shish</span>
-                  <span className="block font-body text-[9px] tracking-[0.18em] uppercase text-[#D96C2F]/80">Shawarma & Grill</span>
-                </div>
+                <Logo size={96} className="w-24 h-24 rounded-2xl" />
               </div>
               <p className="font-body text-sm text-white/50 leading-relaxed max-w-xs">
                 Authentic charcoal grill and handcrafted Middle Eastern food in the heart of Melbourne.

@@ -11,17 +11,9 @@ import { InteractiveProductCard } from "@/components/ui/card-7";
 import { getPublicMenu } from "@/lib/actions/menu";
 import type { MenuItem } from "@/data/menu";
 
-// Brand mark (matches the Navbar logo) encoded as an inline SVG data URI — the
-// InteractiveProductCard expects an image URL for its corner logo, not an icon node.
-const BRAND_LOGO_URI =
-  "data:image/svg+xml," +
-  encodeURIComponent(
-    `<svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 8 C20 8 14 14 14 20 C14 26 17 30 20 32 C23 30 26 26 26 20 C26 14 20 8 20 8Z" fill="white" fill-opacity="0.9"/>
-      <path d="M12 18 L28 18" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M10 22 L30 22" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>`
-  );
+// Brand mark for the InteractiveProductCard corner logo — the card expects an
+// image URL, so we point it at the shared logo-mark asset in /public.
+const BRAND_LOGO_URI = "/logo-mark.svg";
 
 // The card's glass header is compact — long menu descriptions get truncated to a short phrase.
 function shortDescription(text: string): string {

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { useUser } from "@/context/UserContext";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { Logo } from "@/components/Logo";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -65,33 +66,12 @@ export function Navbar() {
               className="flex items-center gap-3 group"
               aria-label="Shish Shawarma & Grill - Home"
             >
-              <div className="w-10 h-10 rounded-full bg-[#B54E32] flex items-center justify-center flex-shrink-0 group-hover:bg-[#D96C2F] transition-colors duration-300">
-                <svg
-                  viewBox="0 0 40 40"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M20 8 C20 8 14 14 14 20 C14 26 17 30 20 32 C23 30 26 26 26 20 C26 14 20 8 20 8Z"
-                    fill="white"
-                    fillOpacity="0.9"
-                  />
-                  <path
-                    d="M12 18 L28 18"
-                    stroke="white"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M10 22 L30 22"
-                    stroke="white"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
+              <Logo
+                variant="mark"
+                size={44}
+                priority
+                className="w-11 h-11 rounded-xl flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform duration-300"
+              />
               <div>
                 <span
                   className={`block font-heading text-xl font-semibold leading-tight transition-colors duration-300 ${
@@ -250,13 +230,7 @@ export function Navbar() {
             {/* Mobile menu header */}
             <div className="flex items-center justify-between px-6 py-5 border-b border-[#E5DDD0]">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-[#B54E32] flex items-center justify-center">
-                  <svg viewBox="0 0 40 40" fill="none" className="w-5 h-5" aria-hidden="true">
-                    <path d="M20 8 C20 8 14 14 14 20 C14 26 17 30 20 32 C23 30 26 26 26 20 C26 14 20 8 20 8Z" fill="white" fillOpacity="0.9" />
-                    <path d="M12 18 L28 18" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-                    <path d="M10 22 L30 22" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
-                </div>
+                <Logo variant="mark" size={40} className="w-10 h-10 rounded-lg" />
                 <div>
                   <span className="block font-heading text-lg font-semibold text-[#2F2F2F]">Shish</span>
                   <span className="block font-body text-[9px] tracking-[0.18em] uppercase text-[#B54E32]">Shawarma & Grill</span>

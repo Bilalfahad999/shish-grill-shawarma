@@ -10,6 +10,7 @@ import {
   User, LogOut, ChevronLeft, Menu, X,
 } from "lucide-react";
 import { logoutAction } from "@/lib/actions/auth";
+import { Logo } from "@/components/Logo";
 
 const navSections = [
   {
@@ -57,13 +58,7 @@ export function Sidebar({ userName, userRole }: { userName: string; userRole: st
       <div className={`flex items-center ${collapsed ? "justify-center px-3" : "justify-between px-5"} h-16 border-b border-white/8 shrink-0`}>
         {!collapsed && (
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-[#B54E32] flex items-center justify-center shrink-0">
-              <svg viewBox="0 0 40 40" fill="none" className="w-5 h-5" aria-hidden="true">
-                <path d="M20 8 C20 8 14 14 14 20 C14 26 17 30 20 32 C23 30 26 26 26 20 C26 14 20 8 20 8Z" fill="white" fillOpacity="0.9" />
-                <path d="M12 18 L28 18" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M10 22 L30 22" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-            </div>
+            <Logo variant="mark" size={32} className="w-8 h-8 rounded-lg shrink-0" />
             <div>
               <p className="text-white text-sm font-semibold leading-tight" style={{ fontFamily: "var(--font-inter)" }}>Shish Admin</p>
             </div>
@@ -163,11 +158,7 @@ export function Sidebar({ userName, userRole }: { userName: string; userRole: st
       {/* Mobile: top bar toggle */}
       <div className="lg:hidden fixed top-0 left-0 right-0 z-50 h-14 bg-[#111111] border-b border-white/8 flex items-center justify-between px-4">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-full bg-[#B54E32] flex items-center justify-center">
-            <svg viewBox="0 0 40 40" fill="none" className="w-4 h-4" aria-hidden="true">
-              <path d="M20 8 C20 8 14 14 14 20 C14 26 17 30 20 32 C23 30 26 26 26 20 C26 14 20 8 20 8Z" fill="white" fillOpacity="0.9" />
-            </svg>
-          </div>
+          <Logo variant="mark" size={28} className="w-7 h-7 rounded-md" />
           <span className="text-white text-sm font-semibold" style={{ fontFamily: "var(--font-inter)" }}>Shish Admin</span>
         </div>
         <button onClick={() => setMobileOpen(true)} className="text-white/60 hover:text-white transition-colors cursor-pointer" aria-label="Open menu">
