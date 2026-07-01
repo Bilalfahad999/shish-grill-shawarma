@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shish Shawarma & Grill
+
+Production-ready website and admin dashboard for Shish Shawarma & Grill — a Melbourne-based halal charcoal grill restaurant. Built with the Next.js App Router, fully functional without a database (mock-data fallback), and architected to drop in PostgreSQL + Prisma when ready.
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router, Turbopack)
+- **Language:** TypeScript (strict)
+- **Styling:** Tailwind CSS v4
+- **Animation:** Framer Motion (see [`src/lib/motion.ts`](src/lib/motion.ts) for the shared variant system)
+- **Forms:** React Hook Form + Zod
+- **Auth:** NextAuth (Auth.js v5), credentials provider
+- **Database:** Prisma + PostgreSQL (optional — see [Database](#database) below)
+- **Email:** Resend
+- **PDF generation:** @react-pdf/renderer
+- **Toasts:** sonner
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
+cp .env.example .env       # fill in what you have; everything has a safe fallback
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) for the storefront, and [http://localhost:3000/admin/login](http://localhost:3000/admin/login) for the admin dashboard.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Dev admin login** (only works when `NODE_ENV=development` and no `ADMIN_EMAIL`/`ADMIN_PASSWORD_HASH` are set):
+`admin@shishgrill.com.au` / `admin123`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Documentation
 
-## Learn More
+| Guide | What it covers |
+|---|---|
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Folder structure, data flow, the mock-data → Prisma migration path |
+| [docs/ADMIN_GUIDE.md](docs/ADMIN_GUIDE.md) | How to use the dashboard (menu, orders, catering, content, settings) |
+| [docs/DEVELOPER_GUIDE.md](docs/DEVELOPER_GUIDE.md) | Conventions, the design system, the animation system, how to add a feature |
+| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Environment variables, production checklist, hosting notes |
 
-To learn more about Next.js, take a look at the following resources:
+## Project Status
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This codebase was built in phases; each phase's output is fully functional:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Storefront** — homepage, design system, brand identity
+2. **Menu** — full menu browsing, search, filtering, item detail modal
+3. **Ordering** — cart, checkout, coupons, order confirmation
+4. **Trust pages** — About, Gallery, Catering, Contact, FAQ
+5. **Admin dashboard** — full CMS (menu, orders, catering, gallery, reviews, settings) running on mock data, architected for Prisma
+6. **Integrations** — transactional email, PDF receipts, WhatsApp deep links, SEO (sitemap/robots/structured data), security headers, error pages
+7. **Polish** — animation system, loading/empty/success states, accessibility audit, performance audit, this documentation
 
-## Deploy on Vercel
+Payment processing (Stripe), the Google Maps embed, and reCAPTCHA are scaffolded with clear `// TODO` markers but require API keys to activate — see [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run dev      # start dev server (Turbopack)
+npm run build    # production build
+npm run start    # run a production build
+npm run lint     # ESLint
+```
+
+## Database
+
+The app runs entirely on typed mock data in [`src/lib/mock-data.ts`](src/lib/mock-data.ts) until `DATABASE_URL` is configured. Every Server Action in [`src/lib/actions/`](src/lib/actions/) has a `// TODO Prisma:` comment showing the exact query to swap in — see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#database--the-mock-data-pattern) for the full migration path.

@@ -1,0 +1,295 @@
+// Prisma schema for Shish Shawarma & Grill CMS
+// Run: npx prisma generate  (after setting DATABASE_URL)
+// Run: npx prisma migrate dev --name init  (to create tables)
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ── Auth ─────────────────────────────────────────────────────────────────────
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(MANAGER)
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  OWNER
+  MANAGER
+  STAFF
+}
+
+// ── Menu ─────────────────────────────────────────────────────────────────────
+
+model MenuItem {
+  id              String      @id @default(cuid())
+  name            String
+  description     String
+  longDescription String?
+  price           String
+  category        Category    @relation(fields: [categoryId], references: [id])
+  categoryId      String
+  image           String
+  popular         Boolean     @default(false)
+  vegetarian      Boolean     @default(false)
+  spicy           Boolean     @default(false)
+  charcoalGrilled Boolean     @default(false)
+  available       Boolean     @default(true)
+  archived        Boolean     @default(false)
+  badge           String?
+  includes        String[]
+  displayOrder    Int         @default(0)
+  extras          Extra[]
+  orderItems      OrderItem[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@index([categoryId])
+  @@index([available, archived])
+}
+
+model Category {
+  id           String     @id @default(cuid())
+  name         String
+  slug         String     @unique
+  description  String?
+  visible      Boolean    @default(true)
+  displayOrder Int        @default(0)
+  items        MenuItem[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model Extra {
+  id         String   @id @default(cuid())
+  name       String
+  price      Float
+  maxQty     Int      @default(3)
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  menuItemId String
+
+  @@index([menuItemId])
+}
+
+// ── Orders ───────────────────────────────────────────────────────────────────
+
+model Order {
+  id              String      @id @default(cuid())
+  orderRef        String      @unique
+  customer        Customer    @relation(fields: [customerId], references: [id])
+  customerId      String
+  items           OrderItem[]
+  orderType       OrderType
+  pickupTime      String?
+  deliveryAddress Json?
+  paymentMethod   String
+  subtotal        Float
+  deliveryFee     Float       @default(0)
+  discount        Float       @default(0)
+  total           Float
+  coupon          String?
+  status          OrderStatus @default(PENDING)
+  notes           String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([customerId])
+}
+
+enum OrderType {
+  PICKUP
+  DELIVERY
+}
+
+enum OrderStatus {
+  PENDING
+  PREPARING
+  READY
+  COMPLETED
+  CANCELLED
+}
+
+model OrderItem {
+  id         String   @id @default(cuid())
+  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId    String
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+  menuItemId String
+  name       String
+  basePrice  Float
+  quantity   Int
+  extras     Json     @default("[]")
+  notes      String?
+
+  @@index([orderId])
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  email     String?
+  orders    Order[]
+  createdAt DateTime @default(now())
+
+  @@index([phone])
+}
+
+// ── Catering ─────────────────────────────────────────────────────────────────
+
+model CateringRequest {
+  id              String         @id @default(cuid())
+  name            String
+  phone           String
+  email           String
+  eventType       String
+  guestCount      String
+  date            String
+  time            String
+  collectionType  String
+  venueAddress    String?
+  budget          String?
+  specialRequests String?
+  status          CateringStatus @default(NEW)
+  adminNotes      String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+enum CateringStatus {
+  NEW
+  CONTACTED
+  QUOTED
+  CONFIRMED
+  COMPLETED
+  ARCHIVED
+}
+
+// ── Gallery ──────────────────────────────────────────────────────────────────
+
+model GalleryImage {
+  id           String   @id @default(cuid())
+  src          String
+  alt          String
+  category     String
+  featured     Boolean  @default(false)
+  aspect       String   @default("landscape")
+  displayOrder Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  @@index([category])
+}
+
+// ── Reviews ──────────────────────────────────────────────────────────────────
+
+model Review {
+  id        String   @id @default(cuid())
+  author    String
+  rating    Int
+  text      String
+  date      String
+  featured  Boolean  @default(false)
+  hidden    Boolean  @default(false)
+  pinned    Boolean  @default(false)
+  source    String   @default("manual")
+  createdAt DateTime @default(now())
+
+  @@index([featured, hidden])
+}
+
+// ── Announcements ─────────────────────────────────────────────────────────────
+
+model Announcement {
+  id          String    @id @default(cuid())
+  message     String
+  type        String    @default("info")
+  ctaLabel    String?
+  ctaHref     String?
+  enabled     Boolean   @default(true)
+  dismissible Boolean   @default(true)
+  startAt     DateTime?
+  endAt       DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// ── Opening Hours ─────────────────────────────────────────────────────────────
+
+model OpeningHour {
+  id      String  @id @default(cuid())
+  day     String  @unique
+  open    String
+  close   String
+  closed  Boolean @default(false)
+}
+
+// ── Page Content ─────────────────────────────────────────────────────────────
+
+model PageContent {
+  id        String   @id @default(cuid())
+  page      String
+  section   String
+  key       String
+  value     String   @db.Text
+  type      String   @default("text")
+  updatedAt DateTime @updatedAt
+
+  @@unique([page, section, key])
+  @@index([page])
+}
+
+// ── Media Library ─────────────────────────────────────────────────────────────
+
+model Media {
+  id        String   @id @default(cuid())
+  url       String
+  filename  String
+  size      Int
+  mimeType  String
+  folder    String   @default("uploads")
+  alt       String?
+  createdAt DateTime @default(now())
+
+  @@index([folder])
+}
+
+// ── Restaurant Settings ───────────────────────────────────────────────────────
+
+model RestaurantSettings {
+  id             String   @id @default("main")
+  name           String
+  phone          String
+  email          String
+  address        String
+  googleMapsUrl  String?
+  whatsappNumber String?
+  instagramUrl   String?
+  facebookUrl    String?
+  tiktokUrl      String?
+  logoUrl        String?
+  faviconUrl     String?
+  seoTitle       String?
+  seoDescription String?
+  deliveryFee    Float    @default(5)
+  minDelivery    Float    @default(30)
+  preparationTime Int     @default(20)
+  deliveryTime    Int     @default(40)
+  updatedAt      DateTime @updatedAt
+}

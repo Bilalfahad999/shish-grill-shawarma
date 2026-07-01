@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/src/generated/prisma
+
+# Persistent admin data (JSON file store — survives server restarts)
+# Remove this line when switching to a real database
+/data
