@@ -75,14 +75,14 @@ export function Navbar() {
               <div>
                 <span
                   className={`block font-heading text-xl font-semibold leading-tight transition-colors duration-300 ${
-                    scrolled ? "text-[#2F2F2F]" : "text-white"
+                    scrolled ? "text-[#2F2F2F]" : "text-white [text-shadow:0_1px_4px_rgba(0,0,0,0.55)]"
                   }`}
                 >
                   Shish
                 </span>
                 <span
                   className={`block font-body text-[10px] tracking-[0.18em] uppercase transition-colors duration-300 ${
-                    scrolled ? "text-[#B54E32]" : "text-white/80"
+                    scrolled ? "text-[#B54E32]" : "text-white/90 [text-shadow:0_1px_3px_rgba(0,0,0,0.5)]"
                   }`}
                 >
                   Shawarma & Grill
@@ -97,7 +97,7 @@ export function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={`font-body text-sm font-medium tracking-wide transition-colors duration-200 hover:text-[#D96C2F] relative group ${
-                    scrolled ? "text-[#2F2F2F]" : "text-white/90"
+                    scrolled ? "text-[#2F2F2F]" : "text-white/90 [text-shadow:0_1px_3px_rgba(0,0,0,0.5)]"
                   }`}
                 >
                   {link.label}
