@@ -228,7 +228,7 @@ export function Navbar() {
             aria-label="Navigation menu"
           >
             {/* Mobile menu header */}
-            <div className="flex items-center justify-between px-6 py-5 border-b border-[#E5DDD0]">
+            <div className="shrink-0 flex items-center justify-between px-6 py-5 border-b border-[#E5DDD0]">
               <div className="flex items-center gap-3">
                 <Logo variant="mark" size={40} className="w-10 h-10 rounded-lg" />
                 <div>
@@ -246,7 +246,7 @@ export function Navbar() {
             </div>
 
             {/* Mobile nav links */}
-            <nav className="flex-1 flex flex-col justify-center px-8 gap-1" aria-label="Mobile navigation">
+            <nav className="flex-1 overflow-y-auto flex flex-col px-8 gap-1 py-6" aria-label="Mobile navigation">
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.href}
@@ -266,7 +266,7 @@ export function Navbar() {
             </nav>
 
             {/* Mobile CTA buttons */}
-            <div className="px-8 pb-10 flex flex-col gap-3">
+            <div className="shrink-0 px-8 pt-4 pb-8 flex flex-col gap-3 border-t border-[#E5DDD0]/60">
               <a
                 href={`tel:${settings.phone}`}
                 className="flex items-center justify-center gap-2 font-body font-medium py-3.5 rounded-full border border-[#B54E32] text-[#B54E32] hover:bg-[#B54E32]/8 transition-colors cursor-pointer"
