@@ -17,7 +17,7 @@ const FALLBACK_SETTINGS: RestaurantSettings = {
   googleMapsUrl: RESTAURANT_CONFIG.googleMapsUrl,
   whatsappNumber: RESTAURANT_CONFIG.whatsappNumber,
   instagramUrl: "https://www.instagram.com/shish_shawarma_grill/?hl=en",
-  facebookUrl: "",
+  facebookUrl: "https://www.facebook.com/shishshawarmagrill/",
   tiktokUrl: "",
   logoUrl: null,
   faviconUrl: null,
@@ -30,13 +30,13 @@ const FALLBACK_SETTINGS: RestaurantSettings = {
 };
 
 const FALLBACK_HOURS: OpeningHour[] = [
-  { id: "mon", day: "Monday", open: "11:00", close: "22:00", closed: false },
-  { id: "tue", day: "Tuesday", open: "11:00", close: "22:00", closed: false },
-  { id: "wed", day: "Wednesday", open: "11:00", close: "22:00", closed: false },
-  { id: "thu", day: "Thursday", open: "11:00", close: "22:00", closed: false },
-  { id: "fri", day: "Friday", open: "11:00", close: "23:00", closed: false },
-  { id: "sat", day: "Saturday", open: "11:00", close: "23:00", closed: false },
-  { id: "sun", day: "Sunday", open: "12:00", close: "21:30", closed: false },
+  { id: "mon", day: "Monday", open: "10:00", close: "21:00", closed: false },
+  { id: "tue", day: "Tuesday", open: "10:00", close: "21:00", closed: false },
+  { id: "wed", day: "Wednesday", open: "10:00", close: "21:00", closed: false },
+  { id: "thu", day: "Thursday", open: "10:00", close: "00:00", closed: false },
+  { id: "fri", day: "Friday", open: "10:00", close: "00:00", closed: false },
+  { id: "sat", day: "Saturday", open: "10:00", close: "00:00", closed: false },
+  { id: "sun", day: "Sunday", open: "10:00", close: "00:00", closed: false },
 ];
 
 /** Live restaurant settings + opening hours, sourced from the admin dashboard. */

@@ -2,11 +2,12 @@ import type { Coupon } from "@/types/order";
 
 export const RESTAURANT_CONFIG = {
   name: "Shish Shawarma & Grill",
-  phone: "+61XXXXXXXXX",
-  whatsappNumber: "+61XXXXXXXXX", // Replace with real WhatsApp number
-  email: "orders@sisshawarma.com.au",
-  address: "[Street Address], Melbourne VIC 3000",
-  googleMapsUrl: "https://maps.google.com",
+  phone: "+61 416 747 235",
+  whatsappNumber: "+61 416 747 235",
+  email: "shishshawarmagrill@gmail.com",
+  address: "184 Widford St, Broadmeadows VIC 3047, Australia",
+  googleMapsUrl:
+    "https://maps.google.com/maps?q=184+Widford+St,+Broadmeadows+VIC+3047,+Australia",
 
   // Pricing
   deliveryFee: 5.0,
@@ -20,9 +21,8 @@ export const RESTAURANT_CONFIG = {
 
   // Operating hours
   hours: {
-    "Mon–Thu": "11:00 AM – 10:00 PM",
-    "Fri–Sat": "11:00 AM – 11:00 PM",
-    Sunday: "12:00 PM – 9:30 PM",
+    "Mon–Wed": "10:00 AM – 9:00 PM",
+    "Thu–Sun": "10:00 AM – 12:00 AM",
   },
 
   // Pickup time slots

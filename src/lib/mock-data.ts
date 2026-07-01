@@ -160,13 +160,13 @@ function defaultAnnouncement(): AdminAnnouncement {
 
 function defaultHours(): OpeningHour[] {
   return [
-    { id: "h1", day: "Monday",    open: "11:00", close: "22:00", closed: false },
-    { id: "h2", day: "Tuesday",   open: "11:00", close: "22:00", closed: false },
-    { id: "h3", day: "Wednesday", open: "11:00", close: "22:00", closed: false },
-    { id: "h4", day: "Thursday",  open: "11:00", close: "22:00", closed: false },
-    { id: "h5", day: "Friday",    open: "11:00", close: "23:00", closed: false },
-    { id: "h6", day: "Saturday",  open: "11:00", close: "23:00", closed: false },
-    { id: "h7", day: "Sunday",    open: "12:00", close: "21:30", closed: false },
+    { id: "h1", day: "Monday",    open: "10:00", close: "21:00", closed: false },
+    { id: "h2", day: "Tuesday",   open: "10:00", close: "21:00", closed: false },
+    { id: "h3", day: "Wednesday", open: "10:00", close: "21:00", closed: false },
+    { id: "h4", day: "Thursday",  open: "10:00", close: "00:00", closed: false },
+    { id: "h5", day: "Friday",    open: "10:00", close: "00:00", closed: false },
+    { id: "h6", day: "Saturday",  open: "10:00", close: "00:00", closed: false },
+    { id: "h7", day: "Sunday",    open: "10:00", close: "00:00", closed: false },
   ];
 }
 
@@ -174,13 +174,15 @@ function defaultSettings(): RestaurantSettings {
   return {
     id: "main",
     name: "Shish Shawarma & Grill",
-    phone: "+61XXXXXXXXX",
-    email: "orders@shishshawarma.com.au",
-    address: "[Street Address], Melbourne VIC 3000",
-    googleMapsUrl: "https://maps.google.com",
-    whatsappNumber: "+61XXXXXXXXX",
+    phone: "+61 416 747 235",
+    email: "shishshawarmagrill@gmail.com",
+    address: "184 Widford St, Broadmeadows VIC 3047, Australia",
+    googleMapsUrl:
+      "https://maps.google.com/maps?q=184+Widford+St,+Broadmeadows+VIC+3047,+Australia",
+    whatsappNumber: "+61 416 747 235",
     instagramUrl: "https://www.instagram.com/shish_shawarma_grill/?hl=en",
-    facebookUrl: "", tiktokUrl: "", logoUrl: null, faviconUrl: null,
+    facebookUrl: "https://www.facebook.com/shishshawarmagrill/",
+    tiktokUrl: "", logoUrl: null, faviconUrl: null,
     seoTitle: "Shish Shawarma & Grill | Authentic Charcoal Grill in Melbourne",
     seoDescription: "Freshly grilled meats and handcrafted wraps in Melbourne. 100% Halal.",
     deliveryFee: 5, minDelivery: 30, preparationTime: 20, deliveryTime: 40,
