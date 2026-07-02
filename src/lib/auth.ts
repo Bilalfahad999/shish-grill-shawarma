@@ -24,6 +24,11 @@ const credentialsSchema = z.object({
 });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  // Trust the deployment host (required on Vercel) and fall back to a built-in
+  // secret so auth works even if AUTH_SECRET isn't configured. Set AUTH_SECRET
+  // in your host's env vars for real security.
+  trustHost: true,
+  secret: process.env.AUTH_SECRET ?? "shish-grill-shawarma-builtin-auth-secret-please-override-me",
   providers: [
     Credentials({
       credentials: {
@@ -49,8 +54,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         // } catch {}
 
         // ── Env-variable fallback (works without database) ───────────────────
-        const adminEmail = process.env.ADMIN_EMAIL;
-        const adminHash = process.env.ADMIN_PASSWORD_HASH;
+        // Fallback defaults let the admin log in on Vercel without any env setup.
+        // Override ADMIN_EMAIL / ADMIN_PASSWORD_HASH in production for real security.
+        const adminEmail = process.env.ADMIN_EMAIL ?? "admin@shishgrill.com.au";
+        const adminHash =
+          process.env.ADMIN_PASSWORD_HASH ??
+          "$2b$12$UptUBq5/zRUreQ49Xvocne0oe.U8/3G3hb/p9A93EUVYpMCtnUuQC"; // default password: ShishAdmin@2026
 
         if (adminEmail && adminHash && email === adminEmail) {
           const valid = await bcrypt.compare(password, adminHash);
