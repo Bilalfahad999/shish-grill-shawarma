@@ -4,7 +4,6 @@ import "./globals.css";
 import { Providers } from "@/components/Providers";
 import { FloatingCart } from "@/components/order/FloatingCart";
 import { FloatingActions } from "@/components/FloatingActions";
-import { AnnouncementBar } from "@/components/AnnouncementBar";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ScrollProgress } from "@/components/motion/ScrollProgress";
 import { SITE_URL, DEFAULT_OG_IMAGE, localBusinessSchema, organizationSchema } from "@/lib/seo";
@@ -87,7 +86,6 @@ export default function RootLayout({
           <JsonLd data={organizationSchema()} />
           <Providers>
             <ScrollProgress />
-            <AnnouncementBar />
             {children}
             <FloatingCart />
             <FloatingActions />

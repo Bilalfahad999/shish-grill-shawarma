@@ -5,8 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  LayoutDashboard, UtensilsCrossed, Tag, ShoppingBag, Briefcase,
-  Image, Star, Megaphone, FileText, FolderOpen, Clock, Settings,
+  LayoutDashboard, ShoppingBag, Briefcase,
   User, LogOut, ChevronLeft, Menu, X,
 } from "lucide-react";
 import { logoutAction } from "@/lib/actions/auth";
@@ -18,28 +17,10 @@ const navSections = [
     items: [{ href: "/admin", icon: LayoutDashboard, label: "Dashboard" }],
   },
   {
-    label: "Content",
-    items: [
-      { href: "/admin/menu", icon: UtensilsCrossed, label: "Menu" },
-      { href: "/admin/categories", icon: Tag, label: "Categories" },
-      { href: "/admin/gallery", icon: Image, label: "Gallery" },
-      { href: "/admin/reviews", icon: Star, label: "Reviews" },
-    ],
-  },
-  {
     label: "Operations",
     items: [
       { href: "/admin/orders", icon: ShoppingBag, label: "Orders" },
       { href: "/admin/catering", icon: Briefcase, label: "Catering" },
-      { href: "/admin/announcements", icon: Megaphone, label: "Announcements" },
-      { href: "/admin/hours", icon: Clock, label: "Opening Hours" },
-    ],
-  },
-  {
-    label: "System",
-    items: [
-      { href: "/admin/settings", icon: Settings, label: "Settings" },
-      { href: "/admin/profile", icon: User, label: "Profile" },
     ],
   },
 ];

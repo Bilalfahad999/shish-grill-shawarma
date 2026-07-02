@@ -15,28 +15,15 @@ interface TopbarProps {
 }
 
 const quickLinks = [
-  { label: "Add Menu Item", href: "/admin/menu/new" },
   { label: "View Orders", href: "/admin/orders" },
   { label: "Catering Requests", href: "/admin/catering" },
-  { label: "Edit Announcement", href: "/admin/announcements" },
-  { label: "Gallery", href: "/admin/gallery" },
-  { label: "Settings", href: "/admin/settings" },
 ];
 
 // Simple search index
 const searchItems = [
   { label: "Dashboard", href: "/admin", group: "Pages" },
-  { label: "Menu Items", href: "/admin/menu", group: "Pages" },
-  { label: "Add Menu Item", href: "/admin/menu/new", group: "Actions" },
-  { label: "Categories", href: "/admin/categories", group: "Pages" },
   { label: "Orders", href: "/admin/orders", group: "Pages" },
   { label: "Catering Requests", href: "/admin/catering", group: "Pages" },
-  { label: "Gallery", href: "/admin/gallery", group: "Pages" },
-  { label: "Reviews", href: "/admin/reviews", group: "Pages" },
-  { label: "Announcements", href: "/admin/announcements", group: "Pages" },
-  { label: "Opening Hours", href: "/admin/hours", group: "Pages" },
-  { label: "Settings", href: "/admin/settings", group: "Pages" },
-  { label: "Profile", href: "/admin/profile", group: "Pages" },
   { label: "View Website", href: "/", group: "External" },
   { label: "View Menu Page", href: "/menu", group: "External" },
 ];
